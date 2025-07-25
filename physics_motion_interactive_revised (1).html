@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Secret Life of Moving Things: Why Everything That Moves, Moves</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background particles */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.1;
+            animation: float 20s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+            33% { transform: translateY(-100px) translateX(100px) rotate(120deg); }
+            66% { transform: translateY(100px) translateX(-100px) rotate(240deg); }
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            color: #1a1a1a;
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 300;
+            text-align: center;
+            position: relative;
+            animation: titleSlide 1s ease-out;
+        }
+        
+        @keyframes titleSlide {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #2c5282, #48bb78);
+            margin: 20px auto;
+            animation: expandWidth 1.5s ease-out;
+        }
+        
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 100px; }
+        }
+        
+        h2 {
+            color: #2c5282;
+            font-size: 2em;
+            margin-top: 60px;
+            margin-bottom: 25px;
+            font-weight: 400;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        h2::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #48bb78;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        .subtitle {
+            font-style: italic;
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            text-align: center;
+            animation: fadeIn 1.5s ease-out 0.5s both;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        p {
+            margin-bottom: 20px;
+            text-align: justify;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .image-container {
+            margin: 40px 0;
+            text-align: center;
+            position: relative;
+            animation: slideUp 0.8s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .image-container img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .caption {
+            font-size: 0.95em;
+            color: #666;
+            margin-top: 15px;
+            font-style: italic;
+            padding: 0 20px;
+        }
+        
+        .concept-box {
+            background: linear-gradient(135deg, #e8f4fd 0%, #d1e9f6 100%);
+            border-left: 5px solid #2c5282;
+            padding: 25px;
+            margin: 35px 0;
+            border-radius: 0 12px 12px 0;
+            position: relative;
+            overflow: hidden;
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .concept-box::before {
+            content: '💡';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            opacity: 0.2;
+        }
+        
+        .concept-box strong {
+            color: #1e3a5f;
+            font-size: 1.1em;
+        }
+        
+        .question-box {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 3px solid #2c5282;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 4px 20px rgba(44, 82, 130, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: scaleIn 0.6s ease-out;
+        }
+        
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .question-box::before {
+            content: '?';
+            position: absolute;
+            top: -20px;
+            right: 30px;
+            font-size: 5em;
+            color: #2c5282;
+            opacity: 0.05;
+            font-weight: bold;
+        }
+        
+        .question-box h3 {
+            color: #2c5282;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+        
+        .options {
+            margin-left: 0;
+        }
+        
+        .option {
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            background: #f8f9fa;
+        }
+        
+        .option:hover {
+            background: #e8f4fd;
+            border-color: #2c5282;
+            transform: translateX(5px);
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .option label {
+            cursor: pointer;
+            display: block;
+        }
+        
+        .check-answer {
+            background: linear-gradient(135deg, #2c5282 0%, #1e3a5f 100%);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(44, 82, 130, 0.3);
+            font-weight: 600;
+        }
+        
+        .check-answer:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 82, 130, 0.4);
+        }
+        
+        .check-answer:active {
+            transform: translateY(0);
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            display: none;
+            animation: slideDown 0.5s ease-out;
+            font-size: 1.05em;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .correct {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border: 2px solid #b8dfc3;
+        }
+        
+        .incorrect {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border: 2px solid #f1b0b7;
+        }
+        
+        .interactive-demo {
+            background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+            border: 3px dashed #2c5282;
+            border-radius: 16px;
+            padding: 35px;
+            margin: 40px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .interactive-demo::before {
+            content: '✨';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 2em;
+            animation: sparkle 2s infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; transform: scale(1) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+        }
+        
+        .interactive-demo h3 {
+            color: #2c5282;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .demo-button {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+            font-weight: 600;
+        }
+        
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+        }
+        
+        .demo-button:active {
+            transform: translateY(0);
+        }
+        
+        .demo-button:disabled {
+            background: linear-gradient(135deg, #ccc 0%, #999 100%);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        
+        #demo-result {
+            margin-top: 25px;
+            font-size: 1.15em;
+            color: #2c5282;
+            font-weight: 600;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+        }
+        
+        .ball-animation {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(to bottom, #87CEEB 0%, #98FB98 50%, #90EE90 100%);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            margin: 25px 0;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ball {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle at 30% 30%, #FF8A80, #FF6B6B, #D32F2F);
+            border-radius: 50%;
+            position: absolute;
+            top: 40px;
+            left: 20px;
+            transition: all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ball::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 8px;
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+        }
+        
+        .surface-label {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            font-size: 1em;
+            color: #333;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+        }
+        
+        .force-demo {
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+            border: 3px solid #4169E1;
+            border-radius: 16px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+            position: relative;
+            min-height: 150px;
+        }
+        
+        .box {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+            border: 3px solid #654321;
+            border-radius: 8px;
+            margin: 30px auto;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .box::after {
+            content: '📦';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+        }
+        
+        .force-arrow {
+            position: absolute;
+            font-size: 3em;
+            transition: all 0.3s ease;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+        
+        .arrow-right {
+            right: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #FF4500;
+        }
+        
+        .arrow-left {
+            left: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #FF4500;
+        }
+        
+        .prediction-box {
+            background: linear-gradient(135deg, #fff9c4 0%, #ffecb3 100%);
+            border: 3px solid #ffd700;
+            border-radius: 16px;
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+            animation: bounce 0.6s ease-out;
+        }
+        
+        @keyframes bounce {
+            0% { transform: scale(0.95); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .prediction-box::before {
+            content: '🤔';
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            font-size: 2em;
+            background: white;
+            padding: 0 10px;
+        }
+        
+        .prediction-box h3 {
+            color: #b8860b;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        ul li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        ul li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            color: #48bb78;
+            font-size: 1.2em;
+        }
+        
+        /* Progress indicator */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 1000;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #2c5282, #48bb78);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #2c5282;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive design */
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.5em; }
+            .container { padding: 20px 15px; }
+            .demo-button { 
+                display: block; 
+                width: 100%; 
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <!-- Animated background particles -->
+    <div class="particle" style="top: 10%; left: 10%; font-size: 2em;">⚡</div>
+    <div class="particle" style="top: 20%; left: 80%; font-size: 2.5em; animation-delay: 3s;">🌟</div>
+    <div class="particle" style="top: 60%; left: 15%; font-size: 1.8em; animation-delay: 7s;">✨</div>
+    <div class="particle" style="top: 80%; left: 70%; font-size: 2.2em; animation-delay: 11s;">💫</div>
+    
+    <div class="container">
+        <h1>The Secret Life of Moving Things</h1>
+        <p class="subtitle">Why everything that moves, moves (and why it stops)</p>
+        
+        <p>Picture this: You're at the playground, and you give a soccer ball a good, strong kick. It rolls across the grass, slows down, and eventually stops. Simple, right? But here's the thing that might blow your mind—that ball actually "wants" to keep rolling forever. Something invisible is fighting against it, forcing it to stop.</p>
+        
+        <div class="image-container">
+            <img src="phys2image1.png" alt="Child kicking soccer ball with invisible friction forces shown">
+            <p class="caption">What you see: a ball that naturally slows down. What's really happening: an invisible force is grabbing at the ball!</p>
+        </div>
+        
+        <p>Today, we're going to uncover the secret life of moving things. We'll discover why nothing moves the way we think it does, and why understanding this changes everything about how we see the world around us.</p>
+        
+        <h2>The Great Rolling Ball Mystery</h2>
+        
+        <p>Let's start with something you can try right now. Imagine rolling a ball across three different surfaces: a grassy field, a smooth wooden floor, and an ice rink. What do you think will happen?</p>
+        
+        <div class="interactive-demo">
+            <h3>🏀 Virtual Ball Rolling Experiment</h3>
+            <p>Click each surface to see how far the ball travels:</p>
+            <button class="demo-button" onclick="rollBall('grass')">Roll on Grass</button>
+            <button class="demo-button" onclick="rollBall('wood')">Roll on Wood</button>
+            <button class="demo-button" onclick="rollBall('ice')">Roll on Ice</button>
+            
+            <div class="ball-animation" id="ballTrack">
+                <div class="ball" id="ball"></div>
+                <div class="surface-label" id="surfaceLabel">Choose a surface above!</div>
+            </div>
+            
+            <div id="demo-result"></div>
+        </div>
+        
+        <div class="prediction-box">
+            <h3>Think About It</h3>
+            <p>Why do you think the ball travels different distances on different surfaces? What might be happening that we can't see?</p>
+        </div>
+        
+        <h2>Meet the Invisible Force Fighter</h2>
+        
+        <p>The culprit has a name: <strong>friction</strong>. Friction is like thousands of tiny, invisible hands grabbing onto moving objects, trying to slow them down. Rough surfaces like grass have lots of these "grabby hands." Smooth surfaces like ice have very few.</p>
+        
+        <div class="concept-box">
+            <strong>The Hidden Truth:</strong> Every time something slows down and stops, an invisible force is doing the work. Without friction, that soccer ball would roll in a straight line forever—even after you stopped kicking it!
+        </div>
+        
+        <p>But here's where it gets really interesting. What if we could eliminate friction completely? What if we could create a perfect, frictionless surface?</p>
+        
+        <div class="question-box">
+            <h3>Question 1: The Frictionless World</h3>
+            <p>If you could kick a ball on a perfectly smooth, frictionless surface, what would happen?</p>
+            <div class="options">
+                <div class="option">
+                    <label><input type="radio" name="q1" value="a">The ball would roll a little farther than on grass</label>
+                </div>
+                <div class="option">
+                    <label><input type="radio" name="q1" value="b">The ball would roll about twice as far as on grass</label>
+                </div>
+                <div class="option">
+                    <label><input type="radio" name="q1" value="c">The ball would keep rolling forever in a straight line</label>
+                </div>
+                <div class="option">
+                    <label><input type="radio" name="q1" value="d">The ball wouldn't move at all</label>
+                </div>
+            </div>
+            <button class="check-answer" onclick="checkAnswer(1, 'c')">Check My Answer</button>
+            <div class="feedback" id="feedback1"></div>
+        </div>
+        
+        <h2>The Push and Pull Universe</h2>
+        
+        <p>Now let's think about what gets things moving in the first place. Nothing moves by itself—everything needs a push or a pull to get started. These pushes and pulls have a name: <strong>forces</strong>.</p>
+        
+        <div class="image-container">
+            <img src="phys2image3.png" alt="Various examples of forces: pushing, pulling, gravity, magnets">
+            <p class="caption">Forces are everywhere: your muscles pushing and pulling, gravity pulling things down, magnets attracting and repelling.</p>
+        </div>
+        
+        <p>You apply forces all the time without thinking about it. When you throw a ball, your arm applies a force. When you pull a wagon, your muscles apply a force. When you drop something, gravity applies a force.</p>
+        
+        <div class="interactive-demo">
+            <h3>🎯 Force Application Simulator</h3>
+            <p>Click the buttons to apply different forces to the box:</p>
+            <button class="demo-button" onclick="applyForce('right')">Push Right →</button>
+            <button class="demo-button" onclick="applyForce('left')">Push Left ←</button>
+            <button class="demo-button" onclick="applyForce('both')">Push Both Ways</button>
+            <button class="demo-button" onclick="applyForce('none')">No Force</button>
+            
+            <div class="force-demo">
+                <div class="box" id="forceBox">
+                    <div class="force-arrow arrow-right" id="rightArrow" style="opacity: 0;">→</div>
+                    <div class="force-arrow arrow-left" id="leftArrow" style="opacity: 0;">←</div>
+                </div>
+                <div id="forceResult"></div>
+            </div>
+        </div>
+        
+        <div class="concept-box">
+            <strong>Force Rule #1:</strong> To make something start moving, you need to apply a force. No force = no motion.
+        </div>
+        
+        <h2>The Straight Line Secret</h2>
+        
+        <p>Here's something that might surprise you: moving objects don't just want to keep moving—they want to keep moving in a perfectly straight line. Think about what happens when you're riding in a car that suddenly turns a corner. Your body wants to keep going straight, so you feel like you're being pushed to one side.</p>
+        
+        <div class="image-container">
+            <img src="phys2image4.png" alt="Person in car feeling pushed sideways during a turn">
+            <p class="caption">When the car turns, your body wants to keep going straight. You're not being pushed outward—you're trying to continue in a straight line!</p>
+        </div>
+        
+        <div class="question-box">
+            <h3>Question 2: The Playground Spinner</h3>
+            <p>You're spinning on a playground merry-go-round. If you let go, what will happen to you?</p>
+            <div class="options">
+                <div class="option">
+                    <label><input type="radio" name="q2" value="a">You'll keep spinning in a circle</label>
+                </div>
+                <div class="option">
+                    <label><input type="radio" name="q2" value="b">You'll fly straight outward from where you let go</label>
+                </div>
+                <div class="option">
+                    <label><input type="radio" name="q2" value="c">You'll fall straight down</label>
+                </div>
+                <div class="option">
+                    <label><input type="radio" name="q2" value="d">You'll fly in a spiral pattern</label>
+                </div>
+            </div>
+            <button class="check-answer" onclick="checkAnswer(2, 'b')">Check My Answer</button>
+            <div class="feedback" id="feedback2"></div>
+        </div>
+        
+        <h2>When Forces Fight: The Tug-of-War Effect</h2>
+        
+        <p>What happens when two forces push or pull on something in opposite directions? Let's find out with a virtual tug-of-war!</p>
+        
+        <div class="interactive-demo">
+            <h3>⚖️ Force Balance Simulator</h3>
+            <p>Adjust the forces and see what happens:</p>
+            <button class="demo-button" onclick="setForces('equal')">Equal Forces</button>
+            <button class="demo-button" onclick="setForces('leftWins')">Left Side Stronger</button>
+            <button class="demo-button" onclick="setForces('rightWins')">Right Side Stronger</button>
+            
+            <div class="force-demo">
+                <div style="display: flex; align-items: center; justify-content: center; position: relative; min-height: 120px;">
+                    <!-- Center reference line -->
+                    <div style="position: absolute; top: 5px; left: 50%; transform: translateX(-50%); width: 3px; height: 100px; background: repeating-linear-gradient(to bottom, #FFD700 0px, #FFD700 8px, transparent 8px, transparent 16px); z-index: 10;"></div>
+                    
+                    <!-- Left team -->
+                    <div style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%);">
+                        <span id="leftForce" style="font-size: 2em; transition: all 0.5s ease;">👥</span>
+                    </div>
+                    
+                    <!-- Moveable box container -->
+                    <div style="position: relative; width: 200px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                        <div class="box" id="tugBox" style="position: relative; z-index: 3;"></div>
+                    </div>
+                    
+                    <!-- Right team -->
+                    <div style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%);">
+                        <span id="rightForce" style="font-size: 2em; transition: all 0.5s ease;">👥</span>
+                    </div>
+                </div>
+                <div id="tugResult" style="margin-top: 10px;"></div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="phys2image5.png" alt="Tug of war with equal forces showing no movement">
+            <p class="caption">When forces are perfectly balanced, nothing moves—even if those forces are enormous!</p>
+        </div>
+        
+        <div class="concept-box">
+            <strong>Force Rule #2:</strong> When forces are balanced (equal and opposite), objects don't move. When forces are unbalanced, objects accelerate in the direction of the stronger force.
+        </div>
+        
+        <h2>The Falling Mystery</h2>
+        
+        <p>Let's talk about something that happens to everything on Earth: falling. When you drop a book, it falls down. When you drop a feather, it also falls down—but much more slowly. Why?</p>
+        
+        <div class="interactive-demo">
+            <h3>🪶 Virtual Dropping Experiment</h3>
+            <p>Drop different objects and observe:</p>
+            <button class="demo-button" onclick="dropObject('rock')">Drop Rock</button>
+            <button class="demo-button" onclick="dropObject('feather')">Drop Feather</button>
+            <button class="demo-button" onclick="dropObject('both')">Drop Both Together</button>
+            
+            <div style="position: relative; height: 300px; margin: 20px 0; background: linear-gradient(to bottom, #87CEEB 0%, #f0f0f0 100%); border-radius: 12px; overflow: hidden;">
+                <div id="dropZone" style="position: relative; height: 100%;">
+                    <div id="droppedRock" style="position: absolute; top: -50px; left: 30%; width: 50px; height: 50px; background: radial-gradient(circle, #696969, #2F4F4F); border-radius: 40%; box-shadow: 0 4px 10px rgba(0,0,0,0.3); display: none;">
+                        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5em;">🪨</span>
+                    </div>
+                    <div id="droppedFeather" style="position: absolute; top: -50px; right: 30%; width: 60px; height: 80px; display: none;">
+                        <span style="font-size: 3em; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">🪶</span>
+                    </div>
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 40px; background: #8B7355; border-top: 3px solid #654321;">
+                        <div style="position: absolute; top: 10px; left: 50%; transform: translateX(-50%); color: white; font-weight: bold;">Ground</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="dropResult" style="min-height: 60px; display: flex; align-items: center; justify-content: center;"></div>
+        </div>
+        
+        <div class="image-container">
+            <img src="phys2image6.png" alt="Feather and rock falling with air resistance shown">
+            <p class="caption">Both objects have the same gravity pulling them down, but air resistance affects them differently.</p>
+        </div>
+        
+        <p>The answer is another invisible force: <strong>air resistance</strong>. Air is made of molecules that push back against moving objects. A feather has a large surface area but weighs very little, so air resistance has a big effect. A rock is heavy and compact, so air resistance barely affects it.</p>
+        
+        <div class="question-box">
+            <h3>Question 3: The Astronaut's Feather</h3>
+            <p>An astronaut on the Moon (where there's no air) drops a feather and a rock at the same time. What happens?</p>
+            <div class="options">
+                <div class="option">
+                    <label><input type="radio" name="q3" value="a">The rock falls faster because it's heavier</label>
+                </div>
+                <div class="option">
+                    <label><input type="radio" name="q3" value="b">The feather falls faster because it's lighter</label>
+                </div>
+                <div class="option">
+                    <label><input type="radio" name="q3" value="c">They fall at exactly the same speed</label>
+                </div>
+                <div class="option">
+                    <label><input type="radio" name="q3" value="d">Neither falls because there's no gravity on the Moon</label>
+                </div>
+            </div>
+            <button class="check-answer" onclick="checkAnswer(3, 'c')">Check My Answer</button>
+            <div class="feedback" id="feedback3"></div>
+        </div>
+        
+        <h2>The Revolutionary Idea</h2>
+        
+        <p>About 400 years ago, a brilliant scientist named Isaac Newton figured out something that changed how we understand motion forever. He realized that our everyday experience tricks us into thinking the wrong thing.</p>
+        
+        <div class="concept-box">
+            <strong>Newton's Revolutionary Insight:</strong> Motion is the natural state of things. Objects want to keep moving in straight lines forever. It's stopping that requires a force, not moving!
+        </div>
+        
+        <p>This idea seemed crazy at the time because everything around us eventually stops moving. But Newton realized that's only because we live in a world full of friction and air resistance. In the vacuum of space, where there's no air and no friction, objects really do keep moving forever.</p>
+        
+        <div class="image-container">
+            <img src="phys2image7.png" alt="Spacecraft in space moving in straight line with no forces">
+            <p class="caption">In space, spacecraft can coast for years without using fuel, traveling in perfectly straight lines.</p>
+        </div>
+        
+        <h2>Putting It All Together</h2>
+        
+        <p>Let's see if you can use your new understanding to solve some motion mysteries:</p>
+        
+        <div class="question-box">
+            <h3>Question 4: The Skateboard Challenge</h3>
+            <p>You're skateboarding down a smooth hill. Halfway down, you jump off. What happens to the skateboard?</p>
+            <div class="options">
+                <div class="option">
+                    <label><input type="radio" name="q4" value="a">It immediately stops moving</label>
+                </div>
+                <div class="option">
+                    <label><input type="radio" name="q4" value="b">It keeps rolling down the hill at the same speed</label>
+                </div>
+                <div class="option">
+                    <label><input type="radio" name="q4" value="c">It rolls backward up the hill</label>
+                </div>
+                <div class="option">
+                    <label><input type="radio" name="q4" value="d">It speeds up because it's lighter without you</label>
+                </div>
+            </div>
+            <button class="check-answer" onclick="checkAnswer(4, 'b')">Check My Answer</button>
+            <div class="feedback" id="feedback4"></div>
+        </div>
+        
+        <h2>Your New Superpower</h2>
+        
+        <p>Congratulations! You now have a superpower that most people don't have: you understand why things move the way they do. You know that:</p>
+        
+        <ul>
+            <li>Moving objects want to keep moving in straight lines forever</li>
+            <li>Friction and air resistance are the invisible forces that make things stop</li>
+            <li>Everything needs a push or pull to start moving</li>
+            <li>Balanced forces create no motion; unbalanced forces create acceleration</li>
+        </ul>
+        
+        <div class="concept-box">
+            <strong>Your Physics Detective Kit:</strong> Next time you see something move, ask yourself: "What force started it moving? What forces are trying to stop it? Why is it moving in that direction?" You'll start seeing the invisible forces that shape our world!
+        </div>
+        
+        <p>The next time you kick a ball, ride a bike, or watch a car drive by, remember: you're not just seeing motion—you're seeing the fundamental forces of nature at work. And that's just the beginning of your journey into understanding how our amazing universe operates.</p>
+        
+        <div class="image-container">
+            <img src="phys2image8.png" alt="Child with "physics vision" seeing force arrows everywhere">
+            <p class="caption">With your new physics understanding, you can see the invisible forces that make everything move!</p>
+        </div>
+        
+        <div class="interactive-demo" style="background: linear-gradient(135deg, #2c5282 0%, #1e3a5f 100%); color: white; margin-top: 60px;">
+            <h3 style="color: white;">🎯 Final Challenge: Test Your Physics Vision!</h3>
+            <p>Can you predict what will happen in these scenarios?</p>
+            <button class="demo-button" style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #333;" onclick="showScenario()">Show Me a Scenario!</button>
+            <div id="scenarioContainer" style="margin-top: 30px; min-height: 100px;"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Update progress bar on scroll
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+        
+        // Enhanced ball rolling animation
+        function rollBall(surface) {
+            const ball = document.getElementById('ball');
+            const label = document.getElementById('surfaceLabel');
+            const result = document.getElementById('demo-result');
+            const track = document.getElementById('ballTrack');
+            
+            // Reset ball position with bounce effect
+            ball.style.transition = 'none';
+            ball.style.left = '20px';
+            ball.style.transform = 'translateY(0) rotate(0deg)';
+            
+            // Update track appearance based on surface
+            if (surface === 'grass') {
+                track.style.background = 'linear-gradient(to bottom, #87CEEB 0%, #228B22 50%, #006400 100%)';
+                label.textContent = '🌱 Grass Surface';
+            } else if (surface === 'wood') {
+                track.style.background = 'linear-gradient(to bottom, #87CEEB 0%, #DEB887 50%, #8B4513 100%)';
+                label.textContent = '🪵 Wood Surface';
+            } else if (surface === 'ice') {
+                track.style.background = 'linear-gradient(to bottom, #87CEEB 0%, #E0FFFF 50%, #B0E0E6 100%)';
+                label.textContent = '🧊 Ice Surface';
+            }
+            
+            setTimeout(() => {
+                ball.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                
+                if (surface === 'grass') {
+                    ball.style.left = '150px';
+                    ball.style.transform = 'translateY(0) rotate(360deg)';
+                    result.innerHTML = '<span style="color: #228B22;">🌱 On grass:</span> The ball stops quickly! All those grass blades create lots of friction.';
+                } else if (surface === 'wood') {
+                    ball.style.left = '400px';
+                    ball.style.transform = 'translateY(0) rotate(900deg)';
+                    result.innerHTML = '<span style="color: #8B4513;">🪵 On wood:</span> The ball rolls much farther! Smooth wood has less friction than grass.';
+                } else if (surface === 'ice') {
+                    ball.style.left = '700px';
+                    ball.style.transform = 'translateY(0) rotate(1800deg)';
+                    result.innerHTML = '<span style="color: #4169E1;">🧊 On ice:</span> The ball keeps rolling! Very little friction means it travels the farthest.';
+                }
+            }, 100);
+        }
+        
+        // Enhanced force application
+        let boxPosition = 0;
+        const pushDistance = 40;
+        const maxPosition = 200;
+        const minPosition = -200;
+        
+        function applyForce(direction) {
+            const box = document.getElementById('forceBox');
+            const rightArrow = document.getElementById('rightArrow');
+            const leftArrow = document.getElementById('leftArrow');
+            const result = document.getElementById('forceResult');
+            
+            // Add impact effect
+            box.style.transform = `translateX(${boxPosition}px) scale(0.95)`;
+            setTimeout(() => {
+                box.style.transform = `translateX(${boxPosition}px) scale(1)`;
+            }, 100);
+            
+            // Reset arrows with fade effect
+            rightArrow.style.opacity = '0';
+            leftArrow.style.opacity = '0';
+            
+            setTimeout(() => {
+                if (direction === 'right') {
+                    if (boxPosition + pushDistance > maxPosition) {
+                        result.innerHTML = '⚠️ Can\'t push further right! The box has reached the edge.';
+                        // Add shake effect
+                        box.style.animation = 'shake 0.5s';
+                        setTimeout(() => box.style.animation = '', 500);
+                        return;
+                    }
+                    boxPosition += pushDistance;
+                    rightArrow.style.opacity = '1';
+                    box.style.transform = `translateX(${boxPosition}px)`;
+                    result.innerHTML = `➡️ <strong>Pushed right!</strong> Box is now ${Math.abs(boxPosition)}px from center.`;
+                    
+                } else if (direction === 'left') {
+                    if (boxPosition - pushDistance < minPosition) {
+                        result.innerHTML = '⚠️ Can\'t push further left! The box has reached the edge.';
+                        box.style.animation = 'shake 0.5s';
+                        setTimeout(() => box.style.animation = '', 500);
+                        return;
+                    }
+                    boxPosition -= pushDistance;
+                    leftArrow.style.opacity = '1';
+                    box.style.transform = `translateX(${boxPosition}px)`;
+                    result.innerHTML = `⬅️ <strong>Pushed left!</strong> Box is now ${Math.abs(boxPosition)}px from center.`;
+                    
+                } else if (direction === 'both') {
+                    rightArrow.style.opacity = '1';
+                    leftArrow.style.opacity = '1';
+                    result.innerHTML = `⚖️ <strong>Equal opposing forces!</strong> Box stays at ${Math.abs(boxPosition)}px from center.`;
+                    
+                } else if (direction === 'none') {
+                    result.innerHTML = `⏸️ <strong>No force applied = no motion.</strong> Box remains at ${Math.abs(boxPosition)}px from center.`;
+                }
+                
+                updateButtonStates();
+            }, 200);
+        }
+        
+        // Add shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(${boxPosition}px); }
+                25% { transform: translateX(${boxPosition - 5}px); }
+                75% { transform: translateX(${boxPosition + 5}px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        function updateButtonStates() {
+            const rightButton = document.querySelector('button[onclick="applyForce(\'right\')"]');
+            const leftButton = document.querySelector('button[onclick="applyForce(\'left\')"]');
+            
+            if (boxPosition + pushDistance > maxPosition) {
+                rightButton.disabled = true;
+            } else {
+                rightButton.disabled = false;
+            }
+            
+            if (boxPosition - pushDistance < minPosition) {
+                leftButton.disabled = true;
+            } else {
+                leftButton.disabled = false;
+            }
+        }
+        
+        // Enhanced tug of war
+        function setForces(scenario) {
+            const leftForce = document.getElementById('leftForce');
+            const rightForce = document.getElementById('rightForce');
+            const tugBox = document.getElementById('tugBox');
+            const result = document.getElementById('tugResult');
+            
+            // Reset with animation
+            tugBox.style.transition = 'none';
+            tugBox.style.transform = 'translateX(0) scale(1.1)';
+            
+            setTimeout(() => {
+                tugBox.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                tugBox.style.transform = 'translateX(0) scale(1)';
+                
+                if (scenario === 'equal') {
+                    leftForce.innerHTML = '👥👥';
+                    rightForce.innerHTML = '👥👥';
+                    tugBox.style.transform = 'translateX(0)';
+                    tugBox.style.background = 'linear-gradient(135deg, #8B4513 0%, #A0522D 100%)';
+                    result.innerHTML = '⚖️ <strong>Equal forces!</strong> The box doesn\'t move—it\'s perfectly balanced.';
+                    
+                } else if (scenario === 'leftWins') {
+                    leftForce.innerHTML = '👥👥👥';
+                    leftForce.style.transform = 'scale(1.3)';
+                    rightForce.innerHTML = '👥';
+                    rightForce.style.transform = 'scale(0.9)';
+                    tugBox.style.transform = 'translateX(-60px) rotate(-5deg)';
+                    tugBox.style.background = 'linear-gradient(135deg, #FF6B6B 0%, #FF4444 100%)';
+                    result.innerHTML = '⬅️ <strong>Left side wins!</strong> Stronger force = motion in that direction.';
+                    
+                } else if (scenario === 'rightWins') {
+                    leftForce.innerHTML = '👥';
+                    leftForce.style.transform = 'scale(0.9)';
+                    rightForce.innerHTML = '👥👥👥';
+                    rightForce.style.transform = 'scale(1.3)';
+                    tugBox.style.transform = 'translateX(60px) rotate(5deg)';
+                    tugBox.style.background = 'linear-gradient(135deg, #4169E1 0%, #1E90FF 100%)';
+                    result.innerHTML = '➡️ <strong>Right side wins!</strong> The box moves toward the stronger force.';
+                }
+                
+                // Reset transforms after animation
+                setTimeout(() => {
+                    leftForce.style.transform = 'scale(1)';
+                    rightForce.style.transform = 'scale(1)';
+                }, 800);
+            }, 100);
+        }
+        
+        // Enhanced dropping experiment
+        function dropObject(object) {
+            const result = document.getElementById('dropResult');
+            const rock = document.getElementById('droppedRock');
+            const feather = document.getElementById('droppedFeather');
+            
+            // Reset positions
+            rock.style.display = 'none';
+            feather.style.display = 'none';
+            rock.style.top = '-50px';
+            feather.style.top = '-50px';
+            
+            result.innerHTML = '<div class="loading"></div> Dropping...';
+            
+            setTimeout(() => {
+                if (object === 'rock') {
+                    rock.style.display = 'block';
+                    setTimeout(() => {
+                        rock.style.transition = 'top 0.8s cubic-bezier(0.55, 0, 1, 0.45)';
+                        rock.style.top = '250px';
+                    }, 50);
+                    setTimeout(() => {
+                        result.innerHTML = '🪨 <strong>The rock falls quickly!</strong><br>Heavy and compact = air resistance has little effect.';
+                    }, 850);
+                    
+                } else if (object === 'feather') {
+                    feather.style.display = 'block';
+                    setTimeout(() => {
+                        feather.style.transition = 'top 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        feather.style.top = '220px';
+                        // Add swaying effect
+                        feather.style.animation = 'sway 2.5s ease-in-out';
+                    }, 50);
+                    setTimeout(() => {
+                        result.innerHTML = '🪶 <strong>The feather drifts down slowly!</strong><br>Light and fluffy = air resistance has a big effect.';
+                    }, 2550);
+                    
+                } else if (object === 'both') {
+                    rock.style.display = 'block';
+                    feather.style.display = 'block';
+                    setTimeout(() => {
+                        rock.style.transition = 'top 0.8s cubic-bezier(0.55, 0, 1, 0.45)';
+                        feather.style.transition = 'top 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        rock.style.top = '250px';
+                        feather.style.top = '220px';
+                        feather.style.animation = 'sway 2.5s ease-in-out';
+                    }, 50);
+                    setTimeout(() => {
+                        result.innerHTML = '🪨🪶 <strong>Different falling speeds!</strong><br>Same gravity, different air resistance effects.';
+                    }, 2550);
+                }
+            }, 200);
+        }
+        
+        // Add sway animation for feather
+        const swayStyle = document.createElement('style');
+        swayStyle.textContent = `
+            @keyframes sway {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-20px) rotate(-10deg); }
+                75% { transform: translateX(20px) rotate(10deg); }
+            }
+        `;
+        document.head.appendChild(swayStyle);
+        
+        // Enhanced answer checking
+        function checkAnswer(questionNum, correctAnswer) {
+            const selectedAnswer = document.querySelector(`input[name="q${questionNum}"]:checked`);
+            const feedbackDiv = document.getElementById(`feedback${questionNum}`);
+            const button = event.target;
+            
+            if (!selectedAnswer) {
+                feedbackDiv.innerHTML = '⚠️ Please select an answer first!';
+                feedbackDiv.className = 'feedback incorrect';
+                feedbackDiv.style.display = 'block';
+                return;
+            }
+            
+            // Add loading effect
+            button.innerHTML = 'Checking... <div class="loading" style="display: inline-block; margin-left: 10px;"></div>';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                if (selectedAnswer.value === correctAnswer) {
+                    feedbackDiv.innerHTML = '🎉 <strong>Excellent!</strong> You\'re thinking like a physicist! ' + getExplanation(questionNum, true);
+                    feedbackDiv.className = 'feedback correct';
+                    // Add celebration effect
+                    createConfetti();
+                } else {
+                    feedbackDiv.innerHTML = '🤔 <strong>Not quite, but good thinking!</strong> ' + getExplanation(questionNum, false);
+                    feedbackDiv.className = 'feedback incorrect';
+                }
+                
+                feedbackDiv.style.display = 'block';
+                button.innerHTML = 'Check My Answer';
+                button.disabled = false;
+            }, 800);
+        }
+        
+        function getExplanation(questionNum, isCorrect) {
+            const explanations = {
+                1: {
+                    correct: 'Without friction, there would be no force to slow the ball down. It would keep its motion forever! 🚀',
+                    incorrect: 'Remember, friction is what stops moving objects. No friction means nothing to slow it down—it would roll forever! Think about objects in space.'
+                },
+                2: {
+                    correct: 'Your body wants to keep moving in a straight line, so when you let go, you\'ll fly straight out from that point! Newton\'s first law in action! 🎯',
+                    incorrect: 'Think about Newton\'s idea: moving objects want to keep going in straight lines. The merry-go-round was forcing you to move in a circle.'
+                },
+                3: {
+                    correct: 'Without air resistance, gravity affects both objects equally. This actually happened on the Moon during the Apollo 15 mission! 🌙',
+                    incorrect: 'Remember, it\'s air resistance that makes feathers fall slowly on Earth. Without air, gravity pulls everything down at the same rate (9.8 m/s²).'
+                },
+                4: {
+                    correct: 'The skateboard has momentum and wants to keep moving. Without you pushing it, it continues at the same speed (until friction slows it down). ⚡',
+                    incorrect: 'Think about Newton\'s insights: moving objects want to keep moving. The skateboard doesn\'t know you jumped off!'
+                }
+            };
+            
+            return explanations[questionNum][isCorrect ? 'correct' : 'incorrect'];
+        }
+        
+        // Create confetti effect for correct answers
+        function createConfetti() {
+            const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#F7DC6F', '#BB8FCE'];
+            const confettiCount = 30;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-10px';
+                confetti.style.opacity = '0.8';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confetti.style.transition = 'all 2s ease-out';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.style.top = '100%';
+                    confetti.style.transform = `rotate(${Math.random() * 720}deg) translateX(${(Math.random() - 0.5) * 200}px)`;
+                    confetti.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => confetti.remove(), 2000);
+            }
+        }
+        
+        // Final challenge scenarios
+        const scenarios = [
+            {
+                question: "A hockey puck slides across perfectly smooth ice. What happens next?",
+                answer: "It keeps sliding at the same speed forever (or until it hits something)!",
+                explanation: "With no friction, there's no force to slow it down."
+            },
+            {
+                question: "You're on a skateboard holding a heavy ball. You throw the ball forward. What happens to you?",
+                answer: "You roll backward on the skateboard!",
+                explanation: "For every action, there's an equal and opposite reaction. The force you use to push the ball forward pushes you backward."
+            },
+            {
+                question: "A satellite orbits Earth. Its engines have been off for years. Why doesn't it fall?",
+                answer: "It's constantly falling, but moving so fast sideways that it keeps missing Earth!",
+                explanation: "In orbit, objects fall toward Earth but move sideways fast enough to keep missing it."
+            },
+            {
+                question: "You're in a train moving at constant speed. You jump straight up. Where do you land?",
+                answer: "In the exact same spot on the train floor!",
+                explanation: "You're already moving with the train. When you jump, you keep that forward motion."
+            }
+        ];
+        
+        let currentScenario = 0;
+        
+        function showScenario() {
+            const container = document.getElementById('scenarioContainer');
+            const scenario = scenarios[currentScenario];
+            
+            container.innerHTML = `
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                    <h4 style="color: #FFD700; margin-bottom: 15px;">Scenario ${currentScenario + 1}:</h4>
+                    <p style="font-size: 1.1em; margin-bottom: 20px;">${scenario.question}</p>
+                    <button class="demo-button" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);" onclick="revealAnswer()">Reveal Answer</button>
+                    <div id="scenarioAnswer" style="display: none; margin-top: 20px; padding: 20px; background: rgba(255,255,255,0.2); border-radius: 8px;">
+                        <p style="font-size: 1.1em; margin-bottom: 10px;"><strong>Answer:</strong> ${scenario.answer}</p>
+                        <p><strong>Why?</strong> ${scenario.explanation}</p>
+                    </div>
+                </div>
+            `;
+            
+            currentScenario = (currentScenario + 1) % scenarios.length;
+        }
+        
+        function revealAnswer() {
+            const answerDiv = document.getElementById('scenarioAnswer');
+            answerDiv.style.display = 'block';
+            answerDiv.style.animation = 'slideDown 0.5s ease-out';
+        }
+        // Add sound effects (using Web Audio API for better performance)
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playSound(type) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            switch(type) {
+                case 'roll':
+                    oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.5);
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                    break;
+                case 'success':
+                    oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+                    oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+                    oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                    break;
+                case 'impact':
+                    oscillator.type = 'square';
+                    oscillator.frequency.setValueAtTime(100, audioContext.currentTime);
+                    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                    break;
+            }
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+        
+        // Enhanced keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                const buttons = document.querySelectorAll('.demo-button:not(:disabled)');
+                const currentIndex = Array.from(buttons).findIndex(btn => btn === document.activeElement);
+                if (currentIndex < buttons.length - 1) {
+                    buttons[currentIndex + 1].focus();
+                }
+            } else if (e.key === 'ArrowLeft') {
+                const buttons = document.querySelectorAll('.demo-button:not(:disabled)');
+                const currentIndex = Array.from(buttons).findIndex(btn => btn === document.activeElement);
+                if (currentIndex > 0) {
+                    buttons[currentIndex - 1].focus();
+                }
+            }
+        });
+        
+        // Add achievement system
+        const achievements = {
+            firstQuestion: false,
+            allQuestions: false,
+            experimenter: false,
+            physicist: false
+        };
+        
+        function checkAchievements() {
+            const correctAnswers = document.querySelectorAll('.feedback.correct').length;
+            
+            if (correctAnswers === 1 && !achievements.firstQuestion) {
+                achievements.firstQuestion = true;
+                showAchievement('First Steps', 'You answered your first question correctly!', '🎯');
+            }
+            
+            if (correctAnswers === 4 && !achievements.allQuestions) {
+                achievements.allQuestions = true;
+                showAchievement('Physics Master', 'You answered all questions correctly!', '🏆');
+            }
+        }
+        
+        function showAchievement(title, description, icon) {
+            const achievement = document.createElement('div');
+            achievement.className = 'achievement';
+            achievement.innerHTML = `
+                <div class="achievement-icon">${icon}</div>
+                <div class="achievement-content">
+                    <h4>${title}</h4>
+                    <p>${description}</p>
+                </div>
+            `;
+            achievement.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: -400px;
+                background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+                color: #333;
+                padding: 20px;
+                border-radius: 12px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                z-index: 1000;
+                transition: right 0.5s ease-out;
+                max-width: 350px;
+            `;
+            
+            document.body.appendChild(achievement);
+            playSound('success');
+            
+            setTimeout(() => {
+                achievement.style.right = '20px';
+            }, 100);
+            
+            setTimeout(() => {
+                achievement.style.right = '-400px';
+                setTimeout(() => achievement.remove(), 500);
+            }, 3000);
+        }
+        
+        // Easter egg: Konami code
+        let konamiCode = [];
+        const konamiPattern = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.key);
+            konamiCode = konamiCode.slice(-10);
+            
+            if (konamiCode.join(',') === konamiPattern.join(',')) {
+                activatePhysicsMode();
+            }
+        });
+        
+        function activatePhysicsMode() {
+            document.body.style.animation = 'rainbow 5s linear infinite';
+            showAchievement('Secret Unlocked!', 'You found the hidden physics mode!', '🌈');
+            
+            // Add rainbow animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes rainbow {
+                    0% { filter: hue-rotate(0deg); }
+                    100% { filter: hue-rotate(360deg); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            setTimeout(() => {
+                document.body.style.animation = '';
+            }, 5000);
+        }
+        
+        // Save progress to localStorage
+        function saveProgress() {
+            const progress = {
+                questionsAnswered: document.querySelectorAll('.feedback[style*="display: block"]').length,
+                correctAnswers: document.querySelectorAll('.feedback.correct').length,
+                achievements: achievements,
+                scrollPosition: window.scrollY
+            };
+            localStorage.setItem('physicsProgress', JSON.stringify(progress));
+        }
+        
+        // Load progress
+        window.addEventListener('load', () => {
+            const saved = localStorage.getItem('physicsProgress');
+            if (saved) {
+                const progress = JSON.parse(saved);
+                if (progress.scrollPosition) {
+                    // Show welcome back message
+                    const welcomeBack = document.createElement('div');
+                    welcomeBack.style.cssText = `
+                        position: fixed;
+                        bottom: 20px;
+                        right: 20px;
+                        background: linear-gradient(135deg, #2c5282 0%, #1e3a5f 100%);
+                        color: white;
+                        padding: 15px 25px;
+                        border-radius: 30px;
+                        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                        z-index: 1000;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    `;
+                    welcomeBack.innerHTML = '👋 Welcome back! Click to continue where you left off.';
+                    welcomeBack.onclick = () => {
+                        window.scrollTo({ top: progress.scrollPosition, behavior: 'smooth' });
+                        welcomeBack.style.transform = 'translateY(100px)';
+                        setTimeout(() => welcomeBack.remove(), 300);
+                    };
+                    document.body.appendChild(welcomeBack);
+                }
+            }
+        });
+        
+        // Save progress on page unload
+        window.addEventListener('beforeunload', saveProgress);
+        
+        // Add interactive physics playground at the end
+        function createPhysicsPlayground() {
+            const playground = document.createElement('div');
+            playground.innerHTML = `
+                <div class="interactive-demo" style="background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%); color: white; margin-top: 60px; min-height: 400px;">
+                    <h3 style="color: #FFD700;">🎮 Physics Playground - Create Your Own Experiments!</h3>
+                    <p>Drag objects around and see how forces work in real-time!</p>
+                    <div id="physicsCanvas" style="position: relative; width: 100%; height: 300px; background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; margin-top: 20px;">
+                        <div class="draggable-object" data-type="ball" style="position: absolute; top: 50px; left: 50px; width: 60px; height: 60px; background: radial-gradient(circle, #FF6B6B, #D32F2F); border-radius: 50%; cursor: grab; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                            <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">🏀</span>
+                        </div>
+                        <div class="draggable-object" data-type="box" style="position: absolute; top: 50px; left: 150px; width: 60px; height: 60px; background: linear-gradient(135deg, #8B4513, #A0522D); border-radius: 8px; cursor: grab; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                            <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">📦</span>
+                        </div>
+                        <div class="force-field" style="position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: linear-gradient(to top, rgba(72, 187, 120, 0.3), transparent); display: flex; align-items: center; justify-content: center; color: #48bb78; font-weight: bold;">
+                            ↓ Gravity Field ↓
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <button class="demo-button" onclick="toggleGravity()">Toggle Gravity</button>
+                        <button class="demo-button" onclick="addWind()">Add Wind Force</button>
+                        <button class="demo-button" onclick="resetPlayground()">Reset</button>
+                    </div>
+                </div>
+            `;
+            
+            return playground;
+        }
+        
+        // Add the playground to the page
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.container');
+            container.appendChild(createPhysicsPlayground());
+            initializeDraggables();
+        });
+        
+        // Draggable physics objects
+        let gravityEnabled = true;
+        let windEnabled = false;
+        
+        function initializeDraggables() {
+            const draggables = document.querySelectorAll('.draggable-object');
+            
+            draggables.forEach(obj => {
+                let isDragging = false;
+                let currentX, currentY;
+                let velocityX = 0, velocityY = 0;
+                
+                obj.addEventListener('mousedown', startDragging);
+                obj.addEventListener('touchstart', startDragging);
+                
+                function startDragging(e) {
+                    isDragging = true;
+                    obj.style.cursor = 'grabbing';
+                    const rect = obj.getBoundingClientRect();
+                    currentX = (e.clientX || e.touches[0].clientX) - rect.left;
+                    currentY = (e.clientY || e.touches[0].clientY) - rect.top;
+                }
+                
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('touchmove', drag);
+                
+                function drag(e) {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    
+                    const canvas = document.getElementById('physicsCanvas');
+                    const canvasRect = canvas.getBoundingClientRect();
+                    
+                    let newX = (e.clientX || e.touches[0].clientX) - canvasRect.left - currentX;
+                    let newY = (e.clientY || e.touches[0].clientY) - canvasRect.top - currentY;
+                    
+                    // Keep within bounds
+                    newX = Math.max(0, Math.min(newX, canvasRect.width - 60));
+                    newY = Math.max(0, Math.min(newY, canvasRect.height - 60));
+                    
+                    // Calculate velocity for momentum
+                    velocityX = newX - parseInt(obj.style.left);
+                    velocityY = newY - parseInt(obj.style.top);
+                    
+                    obj.style.left = newX + 'px';
+                    obj.style.top = newY + 'px';
+                }
+                
+                document.addEventListener('mouseup', stopDragging);
+                document.addEventListener('touchend', stopDragging);
+                
+                function stopDragging() {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    obj.style.cursor = 'grab';
+                    
+                    // Apply momentum
+                    applyMomentum(obj, velocityX, velocityY);
+                }
+            });
+        }
+        
+        function applyMomentum(obj, vx, vy) {
+            const canvas = document.getElementById('physicsCanvas');
+            const canvasRect = canvas.getBoundingClientRect();
+            let x = parseInt(obj.style.left);
+            let y = parseInt(obj.style.top);
+            
+            const animate = () => {
+                // Apply gravity
+                if (gravityEnabled && y < canvasRect.height - 110) {
+                    vy += 0.5;
+                }
+                
+                // Apply wind
+                if (windEnabled) {
+                    vx += 0.2;
+                }
+                
+                // Apply friction
+                vx *= 0.98;
+                vy *= 0.98;
+                
+                // Update position
+                x += vx;
+                y += vy;
+                
+                // Bounce off walls
+                if (x <= 0 || x >= canvasRect.width - 60) {
+                    vx = -vx * 0.8;
+                    x = Math.max(0, Math.min(x, canvasRect.width - 60));
+                }
+                
+                if (y >= canvasRect.height - 110) {
+                    vy = -vy * 0.7;
+                    y = canvasRect.height - 110;
+                    if (Math.abs(vy) < 1) vy = 0;
+                }
+                
+                obj.style.left = x + 'px';
+                obj.style.top = y + 'px';
+                
+                // Continue animation if still moving
+                if (Math.abs(vx) > 0.1 || Math.abs(vy) > 0.1) {
+                    requestAnimationFrame(animate);
+                }
+            };
+            
+            animate();
+        }
+        
+        function toggleGravity() {
+            gravityEnabled = !gravityEnabled;
+            const field = document.querySelector('.force-field');
+            field.style.opacity = gravityEnabled ? '1' : '0.3';
+            showAchievement('Gravity Toggled', gravityEnabled ? 'Gravity is ON' : 'Gravity is OFF', '🌍');
+        }
+        
+        function addWind() {
+            windEnabled = !windEnabled;
+            if (windEnabled) {
+                showAchievement('Wind Active', 'Objects will be pushed to the right!', '💨');
+                setTimeout(() => { windEnabled = false; }, 5000);
+            }
+        }
+        
+        function resetPlayground() {
+            const objects = document.querySelectorAll('.draggable-object');
+            objects[0].style.left = '50px';
+            objects[0].style.top = '50px';
+            objects[1].style.left = '150px';
+            objects[1].style.top = '50px';
+        }
+        
+        // Add print-friendly styles
+        const printStyles = document.createElement('style');
+        printStyles.textContent = `
+            @media print {
+                .progress-container, .particle, .demo-button, .interactive-demo {
+                    display: none !important;
+                }
+                body {
+                    background: white !important;
+                }
+                .container {
+                    box-shadow: none !important;
+                    max-width: 100% !important;
+                }
+                .concept-box, .question-box {
+                    page-break-inside: avoid;
+                }
+            }
+        `;
+        document.head.appendChild(printStyles);
+        
+        // Initialize everything
+        window.addEventListener('load', () => {
+            // Fade in content
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 1s ease-in';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
